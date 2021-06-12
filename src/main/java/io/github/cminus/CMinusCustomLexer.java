@@ -23,6 +23,8 @@ public class CMinusCustomLexer extends CMinusLexer {
         switch (getType()) {
             case ILLEGAL_OCT:
                 return handleIllegalInput("Illegal octal numbers!");
+            case ILLEGAL_DEC:
+                return handleIllegalInput("Illegal decimal numbers!");
             case ILLEGAL_HEX:
                 return handleIllegalInput("Illegal hex numbers!");
             case UNTERMINATED_ML_COMMENT:

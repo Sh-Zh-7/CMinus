@@ -2,4 +2,5 @@ int main()
 {
     int a = 09;
     int b = 0xzz;
+    int c = 1a2b;
 }

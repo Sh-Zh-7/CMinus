@@ -36,6 +36,7 @@ varDec
     : ID
     | varDec LB INT RB
     | varDec LB ILLEGAL_OCT RB
+    | varDec LB ILLEGAL_DEC RB
     | varDec LB ILLEGAL_HEX RB
     ;
 funDec
@@ -108,6 +109,7 @@ exp
     | ID
     | INT
     | ILLEGAL_OCT
+    | ILLEGAL_DEC
     | ILLEGAL_HEX
     | FLOAT
     ;
@@ -124,6 +126,7 @@ fragment DEC: '0' | [1-9][0-9]*;
 fragment HEX: ('0x' | '0X') ('0' | [1-9a-fA-F][0-9a-fA-F]*);
 ILLEGAL_OCT: '0' [0-7]* [8-9a-fA-F]+ [0-7]*;
 ILLEGAL_HEX: ('0x' | '0X') [0-9a-fA-F]* [g-zG-Z]+ [0-9a-fA-F]*;
+ILLEGAL_DEC: [0-9]+ [0-9a-zA-Z]*;
 
 // Floating-point numbers
 FLOAT: NORMAL_FLOAT | EXP_FLOAT;

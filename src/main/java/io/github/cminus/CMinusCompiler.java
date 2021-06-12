@@ -9,7 +9,7 @@ import static io.github.cminus.CompilerHelper.getSyntaxTree;
 
 public class CMinusCompiler {
     public static void main(String[] args) throws IOException {
-        runFromFile("src/test/resources/examples/example3.cm");
+        runFromFile("src/test/resources/advance/illegal_int.cm");
     }
 
     public static void runFromFile(String path) throws IOException {
@@ -30,8 +30,6 @@ public class CMinusCompiler {
         // Error handling
         if (lexer.getNumberOfTokenErrors() == 0 && parser.getNumberOfSyntaxErrors() == 0) {
             System.out.println(getSyntaxTree(parser, tree));
-        } else {
-            System.exit(-1);
         }
     }
 }

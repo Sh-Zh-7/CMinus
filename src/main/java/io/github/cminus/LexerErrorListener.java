@@ -13,6 +13,5 @@ public class LexerErrorListener extends BaseErrorListener {
                             String msg,
                             RecognitionException e) {
             System.err.println("Error type A at Line " + line + ": " + msg);
-            throw e;
     }
 }

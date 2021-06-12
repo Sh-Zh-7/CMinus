@@ -1,5 +1,19 @@
 grammar CMinus;
 
+@lexer::members {
+    public int _tokenErrors = 0;
+
+	@Override
+	public void notifyListeners(LexerNoViableAltException e) {
+		++this._tokenErrors;
+		super.notifyListeners(e);
+	}
+
+	public int getNumberOfTokenErrors() {
+		return this._tokenErrors;
+	}
+}
+
 // Hign level definition
 program: extDefList;
 extDefList

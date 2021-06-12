@@ -13,6 +13,5 @@ public class ParserErrorListener extends BaseErrorListener {
         if (e instanceof InputMismatchException) {
             System.err.println("Error type B at Line " + line + ": " + msg);
         }
-        throw e;
     }
 }

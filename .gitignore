@@ -73,3 +73,15 @@ crashlytics-build.properties
 fabric.properties
 
 .DS_Store
+
+### ANTLR ###
+src/main/java/io/github/cminus/CMinus.interp
+src/main/java/io/github/cminus/CMinus.tokens
+src/main/java/io/github/cminus/CMinusBaseListener.java
+src/main/java/io/github/cminus/CMinusBaseVisitor.java
+src/main/java/io/github/cminus/CMinusLexer.java
+src/main/java/io/github/cminus/CMinusLexer.interp
+src/main/java/io/github/cminus/CMinusLexer.tokens
+src/main/java/io/github/cminus/CMinusListener.java
+src/main/java/io/github/cminus/CMinusParser.java
+src/main/java/io/github/cminus/CMinusVisitor.java

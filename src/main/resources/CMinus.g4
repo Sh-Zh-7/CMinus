@@ -117,13 +117,14 @@ args
     ;
 
 // Tokens
+// Integers
 INT: OCT | DEC | HEX;
 fragment OCT: '0' ('0' | [1-7][0-7]*);
 fragment DEC: '0' | [1-9][0-9]*;
 fragment HEX: ('0x' | '0X') ('0' | [1-9a-fA-F][0-9a-fA-F]*);
 ILLEGAL_OCT: '0' [0-7]* [8-9a-fA-F]+ [0-7]*;
 ILLEGAL_HEX: ('0x' | '0X') [0-9a-fA-F]* [g-zG-Z]+ [0-9a-fA-F]*;
-
+// Floating-point numbers
 FLOAT: INT '.' INT;
 SEMI: ';';
 COMMA: ',';
@@ -156,3 +157,4 @@ fragment DIGIT: [0-9];
 WS: [ \t\n\r] -> skip;
 SL_COMMENT: '//' ~[\r\n]* -> skip;
 ML_COMMENT: '/*' .*? '*/' -> skip;
+UNTERMINATED_ML_COMMENT: '/*' ('*' ~'/' | ~'*')*;

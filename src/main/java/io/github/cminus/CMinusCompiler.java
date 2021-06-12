@@ -13,7 +13,7 @@ import static io.github.cminus.CompilerHelper.getSyntaxTree;
 public class CMinusCompiler {
     public static void main(String[] args) throws IOException {
         // Lexer configuration
-        CharStream input = CharStreams.fromFileName("src/test/resources/examples/example2.cm");
+        CharStream input = CharStreams.fromFileName("src/test/resources/advance/illegal_comment2.cm");
         CMinusCustomLexer lexer = new CMinusCustomLexer(input);
         lexer.removeErrorListeners();
         lexer.addErrorListener(new LexerErrorListener());

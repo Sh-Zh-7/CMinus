@@ -26,7 +26,7 @@ public class CMinusCustomLexer extends CMinusLexer {
             case ILLEGAL_HEX:
                 return handleIllegalInput("Illegal hex numbers!");
             case UNTERMINATED_ML_COMMENT:
-                return handleIllegalInput("Illegal block comment! Did you miss '*' or '*/'?");
+                return handleIllegalInput("Illegal block comment! Did you miss the '*' or '*/'?");
             default:
                 return super.emit();
         }

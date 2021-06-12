@@ -14,4 +14,8 @@ public class CompilerUtils {
         return Integer.parseInt(str);
     }
 
+    public static Float strToFloat(String str) {
+        return Float.parseFloat(str);
+    }
+
 }

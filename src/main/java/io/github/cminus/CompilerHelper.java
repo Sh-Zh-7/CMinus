@@ -12,8 +12,7 @@ import org.antlr.v4.runtime.tree.Tree;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.github.cminus.CompilerUtils.strToInt;
-import static io.github.cminus.CompilerUtils.upperFirstChar;
+import static io.github.cminus.CompilerUtils.*;
 
 public class CompilerHelper {
     public static String getSyntaxTree(Parser parser, ParseTree root) {
@@ -65,7 +64,7 @@ public class CompilerHelper {
                     case CMinusLexer.ID:    return "ID: " + symbol.getText();
                     case CMinusLexer.TYPE:  return "TYPE: " + symbol.getText();
                     case CMinusLexer.INT:   return "INT: " + strToInt(symbol.getText());
-                    case CMinusLexer.FLOAT: return "FLOAT: " + symbol.getText();
+                    case CMinusLexer.FLOAT: return "FLOAT: " + strToFloat(symbol.getText());
                     default: return CMinusLexer.VOCABULARY.getSymbolicName(tokenType);
                 }
             }

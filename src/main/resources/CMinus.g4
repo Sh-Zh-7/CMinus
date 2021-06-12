@@ -124,8 +124,16 @@ fragment DEC: '0' | [1-9][0-9]*;
 fragment HEX: ('0x' | '0X') ('0' | [1-9a-fA-F][0-9a-fA-F]*);
 ILLEGAL_OCT: '0' [0-7]* [8-9a-fA-F]+ [0-7]*;
 ILLEGAL_HEX: ('0x' | '0X') [0-9a-fA-F]* [g-zG-Z]+ [0-9a-fA-F]*;
+
 // Floating-point numbers
-FLOAT: INT '.' INT;
+FLOAT: NORMAL_FLOAT | EXP_FLOAT;
+fragment NORMAL_FLOAT
+    : DEC '.'
+    | '.' DEC
+    | DEC '.' DEC
+    ;
+fragment EXP_FLOAT: NORMAL_FLOAT ('e' | 'E') ('+' | '-')? [0-9]+;
+
 SEMI: ';';
 COMMA: ',';
 ASSIGNOP: '=';

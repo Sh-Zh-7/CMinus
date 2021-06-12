@@ -127,7 +127,10 @@ args
     ;
 
 // Tokens
-INT: '0' | [1-9][0-9]*;
+INT: OCT | DEC | HEX;
+fragment OCT: '0' ('0' | [1-7][0-7]*);
+fragment DEC: '0' | [1-9][0-9]*;
+fragment HEX: ('0x' | '0X') ('0' | [1-9a-fA-F][0-9a-fA-F]*);
 FLOAT: INT '.' INT;
 SEMI: ';';
 COMMA: ',';

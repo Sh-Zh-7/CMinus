@@ -12,6 +12,9 @@ import org.antlr.v4.runtime.tree.Tree;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.github.cminus.CompilerUtils.strToInt;
+import static io.github.cminus.CompilerUtils.upperFirstChar;
+
 public class CompilerHelper {
     public static String getSyntaxTree(Parser parser, ParseTree root) {
         StringBuilder buf = new StringBuilder();
@@ -61,7 +64,7 @@ public class CompilerHelper {
                 switch (tokenType) {
                     case CMinusLexer.ID:    return "ID: " + symbol.getText();
                     case CMinusLexer.TYPE:  return "TYPE: " + symbol.getText();
-                    case CMinusLexer.INT:   return "INT: " + symbol.getText();
+                    case CMinusLexer.INT:   return "INT: " + strToInt(symbol.getText());
                     case CMinusLexer.FLOAT: return "FLOAT: " + symbol.getText();
                     default: return CMinusLexer.VOCABULARY.getSymbolicName(tokenType);
                 }
@@ -82,9 +85,5 @@ public class CompilerHelper {
         }
         ParserRuleContext context = (ParserRuleContext)root;
         return getLine(context.getChild(0));
-    }
-
-    private static String upperFirstChar(String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

@@ -1,19 +1,5 @@
 grammar CMinus;
 
-@lexer::members {
-    public int _tokenErrors = 0;
-
-	@Override
-	public void notifyListeners(LexerNoViableAltException e) {
-		++this._tokenErrors;
-		super.notifyListeners(e);
-	}
-
-	public int getNumberOfTokenErrors() {
-		return this._tokenErrors;
-	}
-}
-
 // Hign level definition
 program: extDefList;
 extDefList
@@ -49,6 +35,8 @@ tag: ID;
 varDec
     : ID
     | varDec LB INT RB
+    | varDec LB ILLEGAL_OCT RB
+    | varDec LB ILLEGAL_HEX RB
     ;
 funDec
     : ID LP varList RP
@@ -119,6 +107,8 @@ exp
     // others
     | ID
     | INT
+    | ILLEGAL_OCT
+    | ILLEGAL_HEX
     | FLOAT
     ;
 args
@@ -131,6 +121,9 @@ INT: OCT | DEC | HEX;
 fragment OCT: '0' ('0' | [1-7][0-7]*);
 fragment DEC: '0' | [1-9][0-9]*;
 fragment HEX: ('0x' | '0X') ('0' | [1-9a-fA-F][0-9a-fA-F]*);
+ILLEGAL_OCT: '0' [0-7]* [8-9a-fA-F]+ [0-7]*;
+ILLEGAL_HEX: ('0x' | '0X') [0-9a-fA-F]* [g-zG-Z]+ [0-9a-fA-F]*;
+
 FLOAT: INT '.' INT;
 SEMI: ';';
 COMMA: ',';

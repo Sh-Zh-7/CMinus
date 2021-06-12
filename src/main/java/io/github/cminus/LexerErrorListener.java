@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 
 public class LexerErrorListener extends BaseErrorListener {
+
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer,
                             Object offendingSymbol,
@@ -12,6 +13,7 @@ public class LexerErrorListener extends BaseErrorListener {
                             int charPositionInLine,
                             String msg,
                             RecognitionException e) {
-            System.err.println("Error type A at Line " + line + ": " + msg);
+        String errorMsgTemplate = "Error type A at Line %d: %s";
+        System.err.println(String.format(errorMsgTemplate, line, msg));
     }
 }

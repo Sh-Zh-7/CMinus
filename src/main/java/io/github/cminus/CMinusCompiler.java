@@ -11,7 +11,7 @@ public class CMinusCompiler {
     public static void main(String[] args) {
         try {
             // Lexer configuration
-            CharStream input = CharStreams.fromFileName("src/main/resources/example1.cm");
+            CharStream input = CharStreams.fromFileName("src/test/resources/examples/example2.cm");
             CMinusLexer lexer = new CMinusLexer(input);
             lexer.removeErrorListeners();
             lexer.addErrorListener(new LexerErrorListener());

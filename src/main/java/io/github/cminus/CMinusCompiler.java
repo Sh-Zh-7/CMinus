@@ -2,18 +2,19 @@ package io.github.cminus;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.GrammarParserInterpreter;
-
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static io.github.cminus.CompilerHelper.getSyntaxTree;
 
 public class CMinusCompiler {
     public static void main(String[] args) throws IOException {
+        runFromFile("src/test/resources/examples/example3.cm");
+    }
+
+    public static void runFromFile(String path) throws IOException {
         // Lexer configuration
-        CharStream input = CharStreams.fromFileName("src/test/resources/advance/fp.cm");
+        CharStream input = CharStreams.fromFileName(path);
         CMinusCustomLexer lexer = new CMinusCustomLexer(input);
         lexer.removeErrorListeners();
         lexer.addErrorListener(new LexerErrorListener());

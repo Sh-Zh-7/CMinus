@@ -138,7 +138,7 @@ fragment NORMAL_FLOAT
     ;
 fragment EXP_FLOAT: NORMAL_FLOAT ('e' | 'E') ('+' | '-')? [0-9]+;
 ILLEGAL_FLOAT: ILLEGAL_NORMAL_FLOAT | ILLEGAL_EXP_FLOAT;
-ILLEGAL_NORMAL_FLOAT
+fragment ILLEGAL_NORMAL_FLOAT
     : DOT
     | ILLEGAL_DEC DOT
     | DOT ILLEGAL_DEC
@@ -146,7 +146,7 @@ ILLEGAL_NORMAL_FLOAT
     | ILLEGAL_DEC DOT DEC
     | ILLEGAL_DEC DOT ILLEGAL_DEC
     ;
-ILLEGAL_EXP_FLOAT
+fragment ILLEGAL_EXP_FLOAT
     : ('e' | 'E') ('+' | '-')? [0-9]+
     | ILLEGAL_NORMAL_FLOAT ('e' | 'E') ('+' | '-')? [0-9]+
     | NORMAL_FLOAT ('e' | 'E') [a-zA-Z]? [a-zA-Z+-]* [0-9]* [a-zA-Z+-]*

@@ -9,7 +9,11 @@ import static io.github.cminus.CompilerHelper.getSyntaxTree;
 
 public class CMinusCompiler {
     public static void main(String[] args) throws IOException {
-        runFromFile("src/test/resources/advance/illegal_int.cm");
+        if (args.length != 1) {
+            System.err.println("One input file's path MUST BE specified!");
+        } else {
+            runFromFile(args[0]);
+        }
     }
 
     public static void runFromFile(String path) throws IOException {

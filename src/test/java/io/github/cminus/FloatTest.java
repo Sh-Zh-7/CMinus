@@ -11,11 +11,11 @@ import java.io.PrintStream;
 
 import static io.github.cminus.TestUtils.getFromFile;
 
-public class IntTest {
-    private final String legalFilePath = "src/test/resources/advance/int.cm";
-    private final String legalExpectedOutPath = "src/test/resources/advance/expected/int.out";
-    private final String illegalFilePath = "src/test/resources/advance/illegal_int.cm";
-    private final String illegalExpectedOutputPath = "src/test/resources/advance/expected/illegal_int.out";
+public class FloatTest {
+    private final String legalFilePath = "src/test/resources/advance/fp.cm";
+    private final String legalExpectedOutPath = "src/test/resources/advance/expected/fp.out";
+    private final String illegalFilePath = "src/test/resources/advance/illegal_fp.cm";
+    private final String illegalExpectedOutputPath = "src/test/resources/advance/expected/illegal_fp.out";
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
@@ -35,7 +35,7 @@ public class IntTest {
     }
 
     @Test
-    public void legalIntTest() throws IOException {
+    public void legalFPTest() throws IOException {
         String expected = getFromFile(legalExpectedOutPath);
         CMinusCompiler.runFromFile(legalFilePath);
         assert expected != null;
@@ -43,7 +43,7 @@ public class IntTest {
     }
 
     @Test
-    public void illegalIntTest() throws IOException {
+    public void illegalFPTest() throws IOException {
         String expected = getFromFile(illegalExpectedOutputPath);
         CMinusCompiler.runFromFile(illegalFilePath);
         assert expected != null;

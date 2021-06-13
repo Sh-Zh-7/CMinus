@@ -1,10 +1,8 @@
 name: CMinus CI about issue bot.
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  issues:
+    types: [opened]
 
 jobs:
   build:

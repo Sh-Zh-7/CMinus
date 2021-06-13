@@ -1,0 +1,64 @@
+name: CMinus CI about issue bot.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Antlr
+      run: |
+        wget https://www.antlr.org/download/antlr-4.9.2-complete.jar
+        alias antlr4='java -jar antlr-4.9.2-complete.jar'
+    - name: Generate source files with Antlr
+      run: |
+        antlr4 \
+        -o src/main/java/io/github/cminus \
+        -package io.github.cminus \
+        -Dlanguage=Java \
+        -encoding utf-8 \
+        -listener  -visitor \
+        -lib src/main/resources src/main/resources/CMinus.g4    
+    - name: Build with Maven
+      run: mvn package -Dmaven.test.skip=true
+    - name: Set up compiler's name
+      run: alias cminus='java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar'
+    - name: Github issue bot
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const cp = require('child_process');
+          github.issues.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          }).then(res => {
+            fs.writeFileSync('input.txt', res.body);
+            cp.exec('cminus input.txt', (err, stdout, stderr) => {
+                github.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.issue.number,
+                    body: stdout? stdout : stderr
+                }).then((res) => {
+                    github.issues.lock({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        lock_reason: "off-topic",
+                    });
+                });
+            });
+          })

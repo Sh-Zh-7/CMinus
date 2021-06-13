@@ -27,6 +27,8 @@ public class CMinusCustomLexer extends CMinusLexer {
                 return handleIllegalInput("Illegal decimal numbers!");
             case ILLEGAL_HEX:
                 return handleIllegalInput("Illegal hex numbers!");
+            case ILLEGAL_FLOAT:
+                return handleIllegalInput("Illegal floating-point numbers!");
             case UNTERMINATED_ML_COMMENT:
                 return handleIllegalInput("Illegal block comment! Did you miss the '*' or '*/'?");
             default:

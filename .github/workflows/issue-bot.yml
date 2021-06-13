@@ -19,10 +19,9 @@ jobs:
     - name: Set up Antlr
       run: |
         wget https://www.antlr.org/download/antlr-4.9.2-complete.jar
-        alias antlr4='java -jar antlr-4.9.2-complete.jar'
     - name: Generate source files with Antlr
       run: |
-        antlr4 \
+        java -jar antlr-4.9.2-complete.jar \
         -o src/main/java/io/github/cminus \
         -package io.github.cminus \
         -Dlanguage=Java \
@@ -31,8 +30,6 @@ jobs:
         -lib src/main/resources src/main/resources/CMinus.g4    
     - name: Build with Maven
       run: mvn package -Dmaven.test.skip=true
-    - name: Set up compiler's name
-      run: alias cminus='java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar'
     - name: Github issue bot
       uses: actions/github-script@v4.0.2
       with:
@@ -46,7 +43,7 @@ jobs:
             issue_number: context.issue.number,
           }).then(res => {
             fs.writeFileSync('input.txt', res.body);
-            cp.exec('cminus input.txt', (err, stdout, stderr) => {
+            cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
                 github.issues.createComment({
                     owner: context.repo.owner,
                     repo: context.repo.repo,

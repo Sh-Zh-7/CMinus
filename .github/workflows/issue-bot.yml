@@ -40,13 +40,13 @@ jobs:
             repo: context.repo.repo,
             issue_number: context.issue.number,
           }).then(res => {
-            fs.writeFileSync('input.txt', res.body);
+            fs.writeFileSync('input.txt', res.data.body);
             cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
                 github.issues.createComment({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: context.issue.number,
-                    body: stdout? stdout : stderr
+                    body: "```\n" + (stdout? stdout : stderr) + "\n```"
                 }).then((res) => {
                     github.issues.lock({
                         owner: context.repo.owner,

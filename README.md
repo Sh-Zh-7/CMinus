@@ -14,11 +14,33 @@ You need the meet the following **prerequisites** before the building:
 
 - **JDK**: Java is selected as the target programming language.
 - **Maven**: this project use the maven as the build tool.
+- **Antlr**: I choose anltr to help us analysis cminus’s syntax.
 
 Firstly, you need to download the project.
 
 ```
 git clone git@github.com:Sh-Zh-7/CMinus.git
+```
+
+Enter the project’s directory and generate the extra source files with antlr. Since these files can be auto generated, I didn’t put them in my repo.
+
+```
+antlr4 -o src/main/java/io/github/cminus -package io.github.cminus -Dlanguage=Java -listener -encoding utf-8 -visitor -lib src/main/resources src/main/resources/CMinus.g4
+```
+
+Finally you can use maven to get our package and then execute it. Alias to executing jar is strongly recommended.
+
+```
+mvn package -Dmaven.test.skip=true
+alias cminus='java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar'
+```
+
+Now you can use `cminus` to interpret the cminus file (with `.cm` suffix)！
+
+Try to execute the following command and watch its output!
+
+```
+cminus src/test/resources/examples/example2.cm
 ```
 
 

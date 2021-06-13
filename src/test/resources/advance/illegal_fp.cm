@@ -1,0 +1,8 @@
+int main() {
+    int a = 1.05e;
+    int b = .e+123;
+    int c = e-456;
+    int d = 1fe;
+    int e = 1e1.1;
+    int f = 1ef;
+}

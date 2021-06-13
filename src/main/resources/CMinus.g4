@@ -112,6 +112,7 @@ exp
     | ILLEGAL_DEC
     | ILLEGAL_HEX
     | FLOAT
+    | ILLEGAL_FLOAT
     ;
 args
     : exp COMMA args
@@ -131,11 +132,26 @@ ILLEGAL_DEC: [0-9]+ [0-9a-zA-Z]*;
 // Floating-point numbers
 FLOAT: NORMAL_FLOAT | EXP_FLOAT;
 fragment NORMAL_FLOAT
-    : DEC '.'
-    | '.' DEC
-    | DEC '.' DEC
+    : DEC DOT
+    | DOT DEC
+    | DEC DOT DEC
     ;
 fragment EXP_FLOAT: NORMAL_FLOAT ('e' | 'E') ('+' | '-')? [0-9]+;
+ILLEGAL_FLOAT: ILLEGAL_NORMAL_FLOAT | ILLEGAL_EXP_FLOAT;
+ILLEGAL_NORMAL_FLOAT
+    : DOT
+    | ILLEGAL_DEC DOT
+    | DOT ILLEGAL_DEC
+    | DEC DOT ILLEGAL_DEC
+    | ILLEGAL_DEC DOT DEC
+    | ILLEGAL_DEC DOT ILLEGAL_DEC
+    ;
+ILLEGAL_EXP_FLOAT
+    : ('e' | 'E') ('+' | '-')? [0-9]+
+    | ILLEGAL_NORMAL_FLOAT ('e' | 'E') ('+' | '-')? [0-9]+
+    | NORMAL_FLOAT ('e' | 'E') [a-zA-Z]? [a-zA-Z+-]* [0-9]* [a-zA-Z+-]*
+    | ILLEGAL_NORMAL_FLOAT ('e' | 'E') [a-zA-Z]? [a-zA-Z+-]* [0-9]* [a-zA-Z+-]*
+    ;
 
 SEMI: ';';
 COMMA: ',';

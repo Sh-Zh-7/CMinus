@@ -35,25 +35,41 @@ jobs:
         script: |
           const fs = require('fs');
           const cp = require('child_process');
-          github.issues.get({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-          }).then(res => {
-            fs.writeFileSync('input.txt', res.data.body);
-            cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
-                github.issues.createComment({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: context.issue.number,
-                    body: "```\n" + (stdout? stdout : stderr) + "\n```"
-                }).then((res) => {
-                    github.issues.lock({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number,
-                        lock_reason: "off-topic",
-                    });
-                });
-            });
-          })
+          // Title must be started with [test] prefix.
+          if (/\[test\]/gm.test(" ${{ github.event.issue.title }} ")) {
+            github.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            }).then(res => {
+              // Get code in pair of ``` or not
+              const codeMD = res.data.body.match(/```\n([\s\S]*)\n```/)[1];
+              const code = codeMD? codeMD : res.data.body;
+              fs.writeFileSync('input.txt', code);
+              cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
+                  // Get output in stdout or stderr
+                  if (stdout) {
+                    const outputPrefix = "Compile successfully. The result is:\n";
+                    const outputContent = "```\n" + stdout + "\n```";
+                    const output = outputPrefix + outputContent;
+                  } else {
+                    const outputPrefix = "Compile failed. The error(s) is(are):\n";
+                    const outputContent = "```\n" + stderr + "\n```";
+                    const output = outputPrefix + outputContent;
+                  }
+                  github.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: context.issue.number,
+                      body: output,
+                  }).then((res) => {
+                      github.issues.lock({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number,
+                          lock_reason: "off-topic",
+                      });
+                  });
+              });
+            }) 
+          }          

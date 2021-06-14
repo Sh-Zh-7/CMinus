@@ -55,7 +55,7 @@ Note there is also a [issue template](https://github.com/Sh-Zh-7/CMinus/issues/n
 
 The effects are shown below:
 
-
+![](asset/example.png)
 
 # License
 

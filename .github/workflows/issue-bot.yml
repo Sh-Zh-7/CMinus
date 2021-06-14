@@ -44,22 +44,26 @@ jobs:
             }).then(res => {
               // Get code in pair of ``` or not
               const matchGroup = res.data.body.match(/```\r\n([\s\S]*)\r\n```/);
+              let code;
+              console.log(matchGroup);
               if (matchGroup && matchGroup[1]) {
-                const code = matchGroup[1];
+                console.log(matchGroup[1]);
+                code = matchGroup[1];
               } else {
-                const code = res.data.body;
+                code = res.data.body;
               }
               fs.writeFileSync('input.txt', code);
               cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
                   // Get output in stdout or stderr
+                  let output;
                   if (stdout) {
                     const outputPrefix = "Compile successfully. The result is:\n";
-                    const outputContent = "```\n" + stdout + "\n```";
-                    const output = outputPrefix + outputContent;
+                    const outputContent = "```\n" + stdout.trimEnd() + "\n```";
+                    output = outputPrefix + outputContent;
                   } else {
                     const outputPrefix = "Compile failed. The error(s) is(are):\n";
-                    const outputContent = "```\n" + stderr + "\n```";
-                    const output = outputPrefix + outputContent;
+                    const outputContent = "```\n" + stderr.trimEnd() + "\n```";
+                    output = outputPrefix + outputContent;
                   }
                   github.issues.createComment({
                       owner: context.repo.owner,

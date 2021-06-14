@@ -43,8 +43,12 @@ jobs:
               issue_number: context.issue.number,
             }).then(res => {
               // Get code in pair of ``` or not
-              const codeMD = res.data.body.match(/```\n([\s\S]*)\n```/)[1];
-              const code = codeMD? codeMD : res.data.body;
+              const matchGroup = res.data.body.match(/```\r\n([\s\S]*)\r\n```/);
+              if (matchGroup && matchGroup[1]) {
+                const code = matchGroup[1];
+              } else {
+                const code = res.data.body;
+              }
               fs.writeFileSync('input.txt', code);
               cp.exec('java -jar target/cminus-1.0-SNAPSHOT-jar-with-dependencies.jar input.txt', (err, stdout, stderr) => {
                   // Get output in stdout or stderr

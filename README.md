@@ -49,6 +49,12 @@ cminus src/test/resources/examples/example2.cm
 
 I carefully prepare the **Github issue-bot** for you to test my compiler.
 
+Check [this page](https://github.com/Sh-Zh-7/CMinus/issues) to see how you can let the issue bot understand your CMinus code.
+
+Note there is also a [issue template](https://github.com/Sh-Zh-7/CMinus/issues/new/choose) to guide you how to write the correct issue to test.
+
+The effects are shown below:
+
 
 
 # License

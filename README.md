@@ -62,3 +62,9 @@ The effects are shown below:
 [WTF License](LICENSE)
 
 Copyright © 2021 Sh-Zh-7
+
+
+
+-----
+
+<p align="center"><b>If you like my project, feel free to give my repo a star! :star: :arrow_up:.</b></p>

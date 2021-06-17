@@ -1,0 +1,32 @@
+name: CMinus test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Set up Antlr
+        run: |
+          wget https://www.antlr.org/download/antlr-4.9.2-complete.jar
+      - name: Generate source files with Antlr
+        run: |
+          java -jar antlr-4.9.2-complete.jar \
+          -o src/main/java/io/github/cminus \
+          -package io.github.cminus \
+          -Dlanguage=Java \
+          -encoding utf-8 \
+          -listener  -visitor \
+          -lib src/main/resources src/main/resources/CMinus.g4
+      - name: Build with Maven
+        run: mvn -Dio.github.cminus.test.excludes="**/TestUtils.java" test
